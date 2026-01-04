@@ -1,2 +1,2 @@
-# jans-website
+# jans.ng
 jans.ng
