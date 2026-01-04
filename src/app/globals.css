@@ -1,0 +1,36 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+  /* Brand green pulled from the existing logo (no logo edits). */
+  --brand: 142 165 94;        /* #8EA55E */
+  --brand-dark: 122 154 55;   /* #7A9A37 */
+}
+
+::selection {
+  background: rgba(var(--brand), 0.25);
+}
+
+body {
+  background:
+    radial-gradient(900px 500px at 15% 0%, rgba(var(--brand), 0.12), transparent 60%),
+    radial-gradient(900px 500px at 85% 15%, rgba(var(--brand), 0.08), transparent 60%),
+    #fff;
+}
+
+
+/* Subtle brand watermark (logo unchanged) */
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  background-image:url("/brand/Logo.jpg");
+  background-repeat:no-repeat;
+  background-position:right -220px bottom -180px;
+  background-size:720px auto;
+  opacity:0.03;
+  pointer-events:none;
+  z-index:-1;
+}
