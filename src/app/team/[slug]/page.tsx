@@ -3,7 +3,7 @@ import Link from "next/link";
 import { partners } from "@/lib/people";
 import type { Metadata } from "next";
 
-type Props = { params: { slug: string } };
+type Props = { params: Promise<{ slug: string }> };
 
 function getPartner(slug: string) {
   return partners.find((p) => p.slug === slug);
@@ -13,8 +13,9 @@ export function generateStaticParams() {
   return partners.map((p) => ({ slug: p.slug }));
 }
 
-export function generateMetadata({ params }: Props): Metadata {
-  const p = getPartner(params.slug);
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { slug } = await params;
+  const p = getPartner(slug);
   if (!p) return { title: "Our People | JANS" };
   return {
     title: `${p.name} | JANS`,
@@ -22,8 +23,9 @@ export function generateMetadata({ params }: Props): Metadata {
   };
 }
 
-export default function PartnerProfilePage({ params }: Props) {
-  const p = getPartner(params.slug);
+export default async function PartnerProfilePage({ params }: Props) {
+  const { slug } = await params;
+  const p = getPartner(slug);
 
   if (!p) {
     return (

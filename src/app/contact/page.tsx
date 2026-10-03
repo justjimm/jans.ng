@@ -25,36 +25,32 @@ export default function ContactPage() {
         <div className="mx-auto max-w-6xl px-4 py-14">
           <div className="grid gap-6 md:grid-cols-2">
             <div className="rounded-2xl bg-white p-6 shadow-sm">
-              <h2 className="text-lg font-semibold">Send a Message</h2>
-              <form className="mt-4 space-y-3">
-                <input
-                  className="w-full rounded-xl border px-4 py-3 text-sm"
-                  placeholder="Full name"
-                />
-                <input
-                  className="w-full rounded-xl border px-4 py-3 text-sm"
-                  placeholder="Email address"
-                />
-                <input
-                  className="w-full rounded-xl border px-4 py-3 text-sm"
-                  placeholder="Phone number"
-                />
-                <textarea
-                  className="w-full rounded-xl border px-4 py-3 text-sm"
-                  placeholder="How can we help?"
-                  rows={5}
-                />
-                <button
-                  type="button"
-                  className="rounded-xl bg-[rgb(var(--brand))] px-5 py-3 text-sm font-semibold text-white hover:opacity-95"
+              <h2 className="text-lg font-semibold">Get in Touch</h2>
+              <p className="mt-3 text-sm text-gray-700">
+                Tell us briefly what you need, and we will reply with next steps.
+              </p>
+              <div className="mt-6 space-y-3">
+                <a
+                  href="https://wa.me/2348057163760"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block rounded-xl bg-[rgb(var(--brand))] px-5 py-3 text-center text-sm font-semibold text-white hover:opacity-95"
                 >
-                  Submit
-                </button>
-                <p className="text-xs text-gray-500">
-                  (Next step: we’ll connect this form to email delivery so submissions land in
-                  info@jans.ng.)
-                </p>
-              </form>
+                  Message us on WhatsApp
+                </a>
+                <a
+                  href="mailto:info@jans.ng"
+                  className="block rounded-xl border px-5 py-3 text-center text-sm font-semibold text-gray-900 hover:bg-gray-50"
+                >
+                  Email info@jans.ng
+                </a>
+                <a
+                  href="tel:+2347011220009"
+                  className="block rounded-xl border px-5 py-3 text-center text-sm font-semibold text-gray-900 hover:bg-gray-50"
+                >
+                  Call +234 701 122 0009
+                </a>
+              </div>
             </div>
 
             <div className="rounded-2xl bg-white p-6 shadow-sm">

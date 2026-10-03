@@ -104,9 +104,6 @@ export default function InsightsPage() {
                     <Pill key={t}>{t}</Pill>
                   ))}
                 </div>
-                <p className="mt-4 text-xs text-gray-500">
-                  (We can convert these into real clickable categories when you start publishing posts.)
-                </p>
               </div>
             </div>
           </div>
