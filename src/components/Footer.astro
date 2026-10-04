@@ -1,0 +1,44 @@
+---
+import { SITE, SOCIALS } from '../data/site';
+import { GROUPS } from '../data/firm';
+const year = new Date().getFullYear();
+---
+<footer class="ftr">
+  <div class="wrap">
+    <div class="ftr-grid">
+      <div class="ftr-brand">
+        <img src="/brand/jans-full-rev.svg" alt="JANS" width="2210" height="1860" loading="lazy" />
+        <p>JANS (formerly {SITE.formerName}) is a Lagos law firm, founded in {SITE.founded}.</p>
+      </div>
+      <div>
+        <h2>Firm</h2>
+        <ul role="list">
+          <li><a href="/about/">About</a></li>
+          <li><a href="/about/#values">Values</a></li>
+          <li><a href="/partners/">Partners</a></li>
+          <li><a href="/careers/">Careers</a></li>
+          <li><a href="/contact/">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2>Expertise</h2>
+        <ul role="list">
+          {GROUPS.map((g) => <li><a href={`/expertise/#${g.id}`}>{g.name}</a></li>)}
+          <li><a href="/sectors/">Sectors</a></li>
+          <li><a href="/insights/">Insights</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2>Follow</h2>
+        <p class="handle">{SITE.handle}</p>
+        <ul class="soc" role="list">
+          {SOCIALS.map((s) => <li><a href={s.url} target="_blank" rel="noopener">{s.name}</a></li>)}
+        </ul>
+      </div>
+    </div>
+    <div class="ftr-legal">
+      <p>Information on this site is general information about Nigerian law. It is not legal advice and does not create a lawyer–client relationship.</p>
+      <p>© {year} JANS · <a href="/privacy/">Privacy notice</a> · <a href="/disclaimer/">Disclaimer</a></p>
+    </div>
+  </div>
+</footer>

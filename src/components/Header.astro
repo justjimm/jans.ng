@@ -1,0 +1,23 @@
+---
+import { NAV } from '../data/site';
+const path = Astro.url.pathname;
+const isCurrent = (href: string) => path === href || (href !== '/' && path.startsWith(href));
+---
+<header class="hdr">
+  <div class="wrap">
+    <a class="brand" href="/" aria-label="JANS home">
+      <img src="/brand/jans-full-rev.svg" alt="JANS" width="2210" height="1860" />
+    </a>
+    <nav class="nav" id="nav" aria-label="Main">
+      <ul role="list">
+        {NAV.map((item) => (
+          <li><a href={item.href} aria-current={isCurrent(item.href) ? 'page' : undefined}>{item.label}</a></li>
+        ))}
+      </ul>
+    </nav>
+    <a class="btn btn-primary btn-sm btn-cta" href="/contact/">Speak to us</a>
+    <button class="menu-btn" id="menuBtn" type="button" aria-controls="nav" aria-expanded="false" aria-label="Open menu">
+      <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M2 5h16M2 10h16M2 15h16" /></svg>
+    </button>
+  </div>
+</header>

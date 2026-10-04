@@ -1,0 +1,22 @@
+---
+import { getPartners } from '../lib/notes';
+const partners = await getPartners();
+---
+<ul class="partners" role="list">
+  {partners.map((p) => (
+    <li class="partner">
+      <a class="pt-photo" href={`/partners/${p.id}/`} tabindex="-1" aria-hidden="true">
+        <img src={p.data.photo} alt="" width="480" height="600" loading="lazy" decoding="async" />
+      </a>
+      <div class="pt-body">
+        <h3><a href={`/partners/${p.id}/`}>{p.data.name}</a></h3>
+        <p class="pt-title">{p.data.title}</p>
+        <p class="pt-focus">{p.data.focus}</p>
+        <p class="pt-mail">
+          <span class="sel">{p.data.email}</span>
+          <button type="button" class="copy" data-copy={p.data.email} aria-label={`Copy ${p.data.email}`}>Copy</button>
+        </p>
+      </div>
+    </li>
+  ))}
+</ul>

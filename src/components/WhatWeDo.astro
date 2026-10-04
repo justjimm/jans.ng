@@ -1,0 +1,12 @@
+---
+import { DO, ACT_FOR } from '../data/firm';
+---
+<ul class="do-list" role="list" aria-label="What we do">
+  {DO.map((d) => (
+    <li class="do"><h3>{d.verb}</h3><p>{d.text}</p></li>
+  ))}
+</ul>
+<div class="act">
+  <span class="label">Who we act for</span>
+  <ul role="list">{ACT_FOR.map((a) => <li>{a}</li>)}</ul>
+</div>

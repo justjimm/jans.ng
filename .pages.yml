@@ -1,0 +1,88 @@
+# Pages CMS (https://app.pagescms.org): lets the JANS team add and edit notes and partner profiles
+# in the browser. Saving commits to this repository and the site rebuilds in about a minute.
+media:
+  input: public/media
+  output: /media
+
+content:
+  - name: insights
+    label: Insights (notes)
+    type: collection
+    path: src/content/insights
+    filename: "{fields.title}.md"
+    format: yaml-frontmatter
+    view:
+      primary: title
+      fields: [title, date, author, draft]
+      sort: [date, title]
+      default:
+        sort: date
+        order: desc
+    fields:
+      - name: title
+        label: Title
+        type: string
+        required: true
+      - name: date
+        label: Publication date
+        type: date
+        required: true
+      - name: area
+        label: Area
+        type: select
+        required: true
+        options:
+          values: [Arbitration, Banking, Capital Markets, Corporate, Data Protection, Dispute Resolution, Employment, Energy, Estates, Insolvency, Insurance, Litigation, Property, Sports, Tax]
+      - name: author
+        label: Author (full name; partner names link to their profile)
+        type: string
+        required: true
+      - name: authorRole
+        label: Author's role (only needed for authors who are not partners, e.g. Associate)
+        type: string
+      - name: standfirst
+        label: Standfirst (one or two sentences shown under the title and in lists)
+        type: text
+        required: true
+      - name: disclosure
+        label: Disclosure (optional)
+        type: text
+      - name: closing
+        label: Closing note (ends with "speak to us", which links to Contact)
+        type: text
+        default: "This note is general information, not legal advice. For advice on your own matter, speak to us."
+      - name: related
+        label: Related note (file name of another note, without .md; optional)
+        type: string
+      - name: sources
+        label: Sources
+        type: object
+        list: true
+        fields:
+          - { name: title, label: Title, type: string }
+          - { name: url, label: Link, type: string }
+      - name: draft
+        label: Draft (tick to keep it off the site)
+        type: boolean
+        default: true
+      - name: body
+        label: Article
+        type: rich-text
+
+  - name: partners
+    label: Partners
+    type: collection
+    path: src/content/partners
+    format: yaml-frontmatter
+    view:
+      primary: name
+      fields: [name, title]
+    fields:
+      - { name: name, label: Name, type: string, required: true }
+      - { name: title, label: Title, type: string, required: true }
+      - { name: focus, label: Focus (one line), type: string }
+      - { name: email, label: Email, type: string }
+      - { name: photo, label: Photo, type: image }
+      - { name: order, label: Order on the page, type: number }
+      - { name: education, label: Education, type: string, list: true }
+      - { name: body, label: Bio, type: rich-text }

@@ -1,0 +1,17 @@
+---
+import { VALUES, TEMPLE } from '../data/firm';
+const poly = (pts: number[][]) => 'M' + pts.map(([x, y]) => `${x} ${y}`).join(' L') + 'Z';
+---
+<ul class="values" role="list">
+  {VALUES.map((v, i) => (
+    <li class="value" id={`value-${i}`}>
+      <svg class="vglyph" viewBox="-20 -20 2208 2637" aria-hidden="true" focusable="false">
+        {Object.entries(TEMPLE).map(([key, pts]) => <path class={key === v.pillar ? 'mt-on' : 'mt-off'} d={poly(pts)} />)}
+      </svg>
+      <div>
+        <h3>{v.name}</h3>
+        <p>{v.text}</p>
+      </div>
+    </li>
+  ))}
+</ul>

@@ -1,0 +1,108 @@
+---
+import '@fontsource/outfit/latin-400.css';
+import '@fontsource/outfit/latin-500.css';
+import '@fontsource/outfit/latin-600.css';
+import '@fontsource/hanken-grotesk/latin-400.css';
+import '@fontsource/hanken-grotesk/latin-500.css';
+import '@fontsource/hanken-grotesk/latin-600.css';
+import '@fontsource/hanken-grotesk/latin-700.css';
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { SITE } from '../data/site';
+import { organizationSchema } from '../lib/schema';
+
+interface Props {
+  title?: string;
+  description?: string;
+  ogType?: 'website' | 'article' | 'profile';
+  schema?: object | object[];
+  noindex?: boolean;
+}
+
+const { title, description = SITE.description, ogType = 'website', schema, noindex = false } = Astro.props;
+const fullTitle = title ? `${title} | JANS` : 'JANS | Lagos Law Firm: Disputes, Deals and Regulation';
+const canonical = new URL(Astro.url.pathname, SITE.url).href;
+const ogImage = new URL('/og.png', SITE.url).href;
+const graphs = [organizationSchema(), ...(schema ? (Array.isArray(schema) ? schema : [schema]) : [])];
+---
+<!doctype html>
+<html lang="en-NG">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    {noindex && <meta name="robots" content="noindex" />}
+    <meta name="theme-color" content="#0f130e" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="alternate" type="application/rss+xml" title="JANS Insights" href="/rss.xml" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <meta property="og:site_name" content="JANS" />
+    <meta property="og:type" content={ogType} />
+    <meta property="og:title" content={title ?? 'JANS | Lagos Law Firm'} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:locale" content="en_NG" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content={SITE.handle} />
+    <script type="application/ld+json" set:html={JSON.stringify({ '@context': 'https://schema.org', '@graph': graphs })} />
+    <slot name="head" />
+  </head>
+  <body>
+    <a class="skip" href="#main">Skip to content</a>
+    <Header />
+    <main id="main">
+      <slot />
+    </main>
+    <Footer />
+    <script>
+      import { wireForms } from '../scripts/forms';
+      wireForms();
+
+      // Mobile menu
+      const hdr = document.querySelector<HTMLElement>('.hdr');
+      const menuBtn = document.getElementById('menuBtn');
+      if (hdr && menuBtn) {
+        const setOpen = (open: boolean) => {
+          hdr.toggleAttribute('data-open', open);
+          menuBtn.setAttribute('aria-expanded', String(open));
+          menuBtn.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+        };
+        menuBtn.addEventListener('click', () => setOpen(!hdr.hasAttribute('data-open')));
+        hdr.querySelectorAll('.nav a').forEach((a) => a.addEventListener('click', () => setOpen(false)));
+        document.addEventListener('keydown', (e) => { if (e.key === 'Escape') setOpen(false); });
+      }
+
+      // Copy buttons: copy the value, or select it if the clipboard is unavailable
+      document.querySelectorAll<HTMLButtonElement>('button.copy').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const label = btn.textContent;
+          const host = btn.closest('.pt-mail, .ct-item, .copyable');
+          const target = host?.querySelector('.sel');
+          const selectIt = () => {
+            if (!target) return;
+            const r = document.createRange();
+            r.selectNodeContents(target);
+            const s = getSelection();
+            s?.removeAllRanges();
+            s?.addRange(r);
+            btn.textContent = 'Selected';
+          };
+          try {
+            navigator.clipboard.writeText(btn.dataset.copy ?? '').then(() => { btn.textContent = 'Copied'; }, selectIt);
+          } catch {
+            selectIt();
+          }
+          setTimeout(() => { btn.textContent = label; }, 1600);
+        });
+      });
+    </script>
+  </body>
+</html>

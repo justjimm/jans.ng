@@ -1,0 +1,11 @@
+---
+import { SECTORS } from '../data/firm';
+---
+<ul class="sector-grid" role="list">
+  {SECTORS.map((s) => (
+    <li class="sector">
+      <h3>{s.name}</h3>
+      <p>{s.desc}</p>
+    </li>
+  ))}
+</ul>

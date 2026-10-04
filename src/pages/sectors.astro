@@ -1,0 +1,22 @@
+---
+import Base from '../layouts/Base.astro';
+import SectorGrid from '../components/SectorGrid.astro';
+---
+<Base title="Sectors" description="The industries JANS advises: oil and gas, power and renewables, banking and fintech, real estate, sports and media, technology, insurance, private clients and non-profits.">
+  <section class="phead">
+    <div class="wrap">
+      <p class="kicker">Sectors</p>
+      <h1>The industries we advise</h1>
+      <p class="lede">Law works differently in each industry. These are the sectors where our partners do most of their work.</p>
+    </div>
+  </section>
+  <section class="sec on-ink" style="padding-top:0">
+    <div class="wrap">
+      <SectorGrid />
+      <div class="ctas" style="margin-top:48px">
+        <a class="btn btn-ghost" href="/expertise/">Our practice groups</a>
+        <a class="btn btn-primary" href="/contact/">Speak to us</a>
+      </div>
+    </div>
+  </section>
+</Base>

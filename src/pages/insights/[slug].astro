@@ -1,0 +1,70 @@
+---
+import { render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import { getNotes, getPartners, longDate, isoDate, readingMinutes, partnerSlugByName, type Note } from '../../lib/notes';
+import { articleSchema } from '../../lib/schema';
+
+export async function getStaticPaths() {
+  const notes = await getNotes();
+  return notes.map((n, i) => ({
+    params: { slug: n.id },
+    props: { note: n, newer: notes[i - 1] ?? null, older: notes[i + 1] ?? null },
+  }));
+}
+
+const { note, newer, older } = Astro.props as { note: Note; newer: Note | null; older: Note | null };
+const d = note.data;
+const { Content } = await render(note);
+const partners = await getPartners();
+const authorSlug = partnerSlugByName(partners, d.author);
+const authorRole = d.authorRole ?? partners.find((p) => p.id === authorSlug)?.data.title;
+const related = d.related ? (await getNotes()).find((n) => n.id === d.related) : undefined;
+const closing = d.closing.replace(/speak to us\.?$/i, '');
+const linkedClosing = closing !== d.closing;
+---
+<Base
+  title={d.title}
+  description={d.standfirst}
+  ogType="article"
+  schema={articleSchema({ title: d.title, standfirst: d.standfirst, date: d.date, author: d.author, area: d.area, slug: note.id, authorSlug })}
+>
+  <meta slot="head" property="article:published_time" content={isoDate(d.date)} />
+  <meta slot="head" property="article:section" content={d.area} />
+  <section class="note-wrap">
+    <div class="wrap">
+      <article class="note">
+        <p class="crumb"><a href="/insights/">← All notes</a></p>
+        <header>
+          <p class="note-kicker"><span>{d.area}</span><time datetime={isoDate(d.date)}>{longDate(d.date)}</time></p>
+          <h1>{d.title}</h1>
+          <p class="note-stand">{d.standfirst}</p>
+          <p class="note-by">
+            {authorSlug ? <a href={`/partners/${authorSlug}/`}>{d.author}</a> : <strong>{d.author}</strong>}
+            {authorRole && <span>{authorRole}</span>}
+            <span>{readingMinutes(note)} min read</span>
+          </p>
+        </header>
+        {d.disclosure && <p class="note-disclosure"><strong>Disclosure:</strong> {d.disclosure}</p>}
+        <div class="prose"><Content /></div>
+        <p class="note-closing">{closing}{linkedClosing && <><a href="/contact/">speak to us</a>.</>}</p>
+        {related && (
+          <aside class="note-related"><span class="label">Related note</span><a href={`/insights/${related.id}/`}>{related.data.title}</a></aside>
+        )}
+        {d.sources.length > 0 && (
+          <section class="note-sources" aria-labelledby="srcTitle">
+            <h2 class="label" id="srcTitle">Sources</h2>
+            <ol>{d.sources.map((s) => <li><a href={s.url} target="_blank" rel="noopener">{s.title}</a></li>)}</ol>
+          </section>
+        )}
+        <nav class="note-pn" aria-label="More notes">
+          {older ? <a class="pn" href={`/insights/${older.id}/`}><span class="label">Older note</span><span class="pn-title">{older.data.title}</span></a> : <span />}
+          {newer ? <a class="pn next" href={`/insights/${newer.id}/`}><span class="label">Newer note</span><span class="pn-title">{newer.data.title}</span></a> : <span />}
+        </nav>
+        <div class="note-cta">
+          <p>Need advice on your own matter?</p>
+          <a class="btn btn-primary" href="/contact/">Speak to us <span class="arr" aria-hidden="true">→</span></a>
+        </div>
+      </article>
+    </div>
+  </section>
+</Base>

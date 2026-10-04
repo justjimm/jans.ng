@@ -1,0 +1,57 @@
+---
+import { SITE, SOCIALS } from '../data/site';
+interface Props { headingLevel?: 'h1' | 'h2'; showForm?: boolean }
+const { headingLevel = 'h2', showForm = false } = Astro.props;
+const H = headingLevel;
+const endpoint = SITE.formspreeId ? `https://formspree.io/f/${SITE.formspreeId}` : '';
+---
+<div class="contact-grid">
+  <div>
+    <p class="kicker">Contact</p>
+    <H>Speak to us</H>
+    <p class="contact-lead">Tell us briefly what you need, and we will reply with next steps.</p>
+    <div class="ctas" style="margin-top:28px">
+      <a class="btn btn-primary" href={SITE.whatsapp} target="_blank" rel="noopener">Message us on WhatsApp <span class="arr" aria-hidden="true">→</span></a>
+    </div>
+  </div>
+  <div style="display:grid;gap:24px;min-width:0">
+    {showForm && endpoint && (
+      <form class="form panel js-form" action={endpoint} method="POST" data-ok="Thank you. Your message has been sent, and we will reply with next steps.">
+        <h2>Send a message</h2>
+        <input type="hidden" name="form" value="Website enquiry" />
+        <input type="hidden" name="_subject" value="New enquiry from jans.ng" />
+        <input class="hp" type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true" />
+        <div class="field"><label for="cName">Name</label><input id="cName" name="name" autocomplete="name" required /></div>
+        <div class="field"><label for="cEmail">Email</label><input id="cEmail" name="email" type="email" autocomplete="email" required /></div>
+        <div class="field"><label for="cPhone">Phone (optional)</label><input id="cPhone" name="phone" type="tel" autocomplete="tel" /></div>
+        <div class="field"><label for="cMsg">How can we help?</label><textarea id="cMsg" name="message" required></textarea></div>
+        <p class="check" style="margin:0">Please give only a brief outline. Do not send confidential documents until we have agreed to act for you.</p>
+        <label class="check" for="cConsent"><input id="cConsent" name="consent" type="checkbox" value="yes" required /> <span>I agree that JANS may use these details to reply to my enquiry, as set out in the <a href="/privacy/">privacy notice</a>.</span></label>
+        <div><button class="btn btn-dark" type="submit">Send message</button></div>
+        <p class="form-msg" role="status" aria-live="polite"></p>
+      </form>
+    )}
+    <div class="ct-items">
+      <div class="ct-item">
+        <span class="label">Office</span>
+        <p class="ct-val">{SITE.address.display}</p>
+      </div>
+      <div class="ct-item">
+        <span class="label">Email</span>
+        <p class="ct-val"><a class="sel" href={`mailto:${SITE.email}`} style="text-decoration:none">{SITE.email}</a></p>
+        <div class="ct-actions"><button type="button" class="copy" data-copy={SITE.email} aria-label={`Copy ${SITE.email}`}>Copy</button></div>
+      </div>
+      <div class="ct-item">
+        <span class="label">Phone</span>
+        <p class="ct-val"><a class="sel" href={`tel:${SITE.phone}`} style="text-decoration:none">{SITE.phoneDisplay}</a></p>
+        <div class="ct-actions"><button type="button" class="copy" data-copy={SITE.phone} aria-label="Copy phone number">Copy</button></div>
+      </div>
+      <div class="ct-item">
+        <span class="label">Follow {SITE.handle}</span>
+        <ul class="soc" role="list">
+          {SOCIALS.map((s) => <li><a href={s.url} target="_blank" rel="noopener">{s.name}</a></li>)}
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,51 @@
+---
+import Base from '../layouts/Base.astro';
+import Story from '../components/Story.astro';
+import WhatWeDo from '../components/WhatWeDo.astro';
+import ValuesList from '../components/ValuesList.astro';
+import { VALUES } from '../data/firm';
+---
+<Base title="About" description="JANS began in 2014 as Jimi Adewole Negotiators | Solicitors. The firm's story, how it works, who it acts for, and its values: Rigour, Growth and Range.">
+  <section class="phead">
+    <div class="wrap">
+      <p class="kicker">About JANS</p>
+      <h1>A Lagos law firm, founded in 2014</h1>
+      <p class="lede">We advise and represent companies, founders and families across Nigeria, from the first contract to the final judgment.</p>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="wrap">
+      <Story />
+      <WhatWeDo />
+    </div>
+  </section>
+
+  <section class="sec on-stone" id="values" aria-labelledby="valTitle">
+    <div class="wrap">
+      <div class="sec-head wide-title">
+        <div>
+          <p class="kicker">Our values</p>
+          <h2 id="valTitle">{VALUES.map((v, i) => <span class="nw">{v.name}{i < VALUES.length - 1 ? ' ·' : ''}</span>)}</h2>
+        </div>
+        <p>The three pillars in our mark stand for the three ideas the firm was built on.</p>
+      </div>
+      <ValuesList />
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="wrap">
+      <div class="sec-head">
+        <div>
+          <p class="kicker">Next</p>
+          <h2>Meet the partners, or speak to us</h2>
+        </div>
+        <div class="ctas" style="margin-top:0">
+          <a class="btn btn-outline" href="/partners/">Our partners</a>
+          <a class="btn btn-dark" href="/contact/">Speak to us</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>

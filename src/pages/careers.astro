@@ -1,0 +1,20 @@
+---
+import Base from '../layouts/Base.astro';
+import { SITE } from '../data/site';
+---
+<Base title="Careers" description="Working at JANS: how to apply for a role, pupillage or internship at the Lagos law firm.">
+  <section class="phead">
+    <div class="wrap">
+      <p class="kicker">Careers</p>
+      <h1>Working at JANS</h1>
+      <p class="lede">We look for lawyers and students who want to learn a client's business before advising on it.</p>
+    </div>
+  </section>
+  <section class="sec">
+    <div class="wrap textpage">
+      <p>To apply for a role, pupillage or internship, email your CV and a short cover note to <strong class="sel">{SITE.email}</strong> with the subject “Careers”. Tell us which area of our work interests you, and why.</p>
+      <p style="margin-top:1em">We keep applications on file for up to twelve months and may contact you when a suitable opening comes up. You can ask us to delete your application at any time. See our <a href="/privacy/">privacy notice</a>.</p>
+      <div class="ctas"><a class="btn btn-dark" href={`mailto:${SITE.email}?subject=Careers`}>Email your application</a></div>
+    </div>
+  </section>
+</Base>

@@ -1,0 +1,56 @@
+---
+import Base from '../layouts/Base.astro';
+import { SITE } from '../data/site';
+---
+<Base title="Privacy notice" description="How JANS collects and uses personal data through jans.ng, under the Nigeria Data Protection Act 2023.">
+  <section class="phead">
+    <div class="wrap">
+      <p class="kicker">Legal</p>
+      <h1>Privacy notice</h1>
+      <p class="lede">How we collect and use personal data through this website, under the Nigeria Data Protection Act 2023.</p>
+    </div>
+  </section>
+  <section class="sec">
+    <div class="wrap textpage prose">
+      <p class="updated">Last updated: 4 October 2026</p>
+
+      <h2>Who we are</h2>
+      <p>JANS (formerly {SITE.formerName}) is a law firm at {SITE.address.display}. We are the data controller for personal data collected through jans.ng. You can reach us about this notice at <strong>{SITE.email}</strong>.</p>
+
+      <h2>What we collect</h2>
+      <ul>
+        <li><strong>Enquiries.</strong> If you send us a message through the contact form, by email or on WhatsApp, we receive your name, contact details and what you tell us.</li>
+        <li><strong>The JANS Brief.</strong> If you sign up, we keep your email address and a record of your consent.</li>
+        <li><strong>Job applications.</strong> If you apply to work with us, we keep your CV and covering note.</li>
+        <li><strong>Technical data.</strong> Our host keeps basic server logs, including IP addresses, for security. We do not use cookies, advertising trackers or analytics that identify you. Fonts are served from our own site.</li>
+      </ul>
+
+      <h2>Why we use it, and on what basis</h2>
+      <ul>
+        <li>To reply to your enquiry and take steps you ask for before we agree to act for you: legitimate interests, and steps prior to entering into a contract.</li>
+        <li>To send The JANS Brief: your consent, which you can withdraw at any time.</li>
+        <li>To consider job applications: legitimate interests, and steps prior to entering into a contract.</li>
+        <li>To meet our legal and professional obligations, including conflict checks and anti-money laundering rules: legal obligation.</li>
+      </ul>
+      <p>Please do not send confidential documents or sensitive personal information through the website. Contacting us does not create a lawyer–client relationship; that begins only when we confirm in writing that we will act for you.</p>
+
+      <h2>Who we share it with</h2>
+      <p>We do not sell personal data. We use a small number of service providers to run this website and its forms: GitHub, which hosts the site, and Formspree, which passes contact and sign-up forms to us by email. Both may process data outside Nigeria, including in the United States. Where data leaves Nigeria, we rely on the safeguards the Nigeria Data Protection Act 2023 allows, including the provider's contractual commitments and, where needed, your consent. WhatsApp messages are handled under WhatsApp's own terms.</p>
+
+      <h2>How long we keep it</h2>
+      <ul>
+        <li>Enquiries that do not lead to instructions: up to two years.</li>
+        <li>Brief sign-ups: until you unsubscribe.</li>
+        <li>Job applications: up to twelve months.</li>
+        <li>Client files: as long as our professional and legal obligations require.</li>
+      </ul>
+
+      <h2>Your rights</h2>
+      <p>You can ask us to tell you what personal data we hold about you and give you a copy, correct it, delete it, restrict or object to how we use it, or move it to another provider. You can withdraw consent at any time, for example by unsubscribing from the Brief. To use any of these rights, email <strong>{SITE.email}</strong>. We will reply within the time the law allows.</p>
+      <p>If you are not satisfied with our response, you can complain to the Nigeria Data Protection Commission.</p>
+
+      <h2>Changes</h2>
+      <p>We will post any changes to this notice on this page and update the date at the top.</p>
+    </div>
+  </section>
+</Base>

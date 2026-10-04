@@ -1,0 +1,19 @@
+---
+import Base from '../../layouts/Base.astro';
+import NoteList from '../../components/NoteList.astro';
+---
+<Base title="Insights" description="Notes on Nigerian law: short, practical notes on law and regulation from the JANS team, written for clients rather than lawyers.">
+  <section class="phead">
+    <div class="wrap">
+      <p class="kicker">Insights</p>
+      <h1>Notes on Nigerian law</h1>
+      <p class="lede">Short, practical notes on Nigerian law and regulation, written by the JANS team for clients rather than lawyers. <a href="/rss.xml" style="color:var(--green)">RSS feed</a></p>
+    </div>
+  </section>
+  <section class="sec">
+    <div class="wrap">
+      <NoteList filters />
+      <p class="disclaim">Insights are general information about Nigerian law, not legal advice. For advice on your own matter, <a href="/contact/">speak to us</a>.</p>
+    </div>
+  </section>
+</Base>

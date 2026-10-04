@@ -1,0 +1,133 @@
+---
+import Base from '../layouts/Base.astro';
+import Story from '../components/Story.astro';
+import WhatWeDo from '../components/WhatWeDo.astro';
+import ValuesList from '../components/ValuesList.astro';
+import Groups from '../components/Groups.astro';
+import SectorGrid from '../components/SectorGrid.astro';
+import PartnerCards from '../components/PartnerCards.astro';
+import NoteList from '../components/NoteList.astro';
+import BriefForm from '../components/BriefForm.astro';
+import ContactBlock from '../components/ContactBlock.astro';
+import { VALUES } from '../data/firm';
+---
+<Base description="JANS is a Lagos law firm, founded in 2014. We advise and represent companies, founders and families across Nigeria in disputes, transactions and regulation.">
+  <section class="hero" aria-labelledby="heroTitle">
+    <div class="wrap">
+      <div class="hero-grid">
+        <div>
+          <p class="eyebrow">Lagos · Since 2014</p>
+          <h1 id="heroTitle">Disputes, deals and regulation, <em>in one firm.</em></h1>
+          <p class="lede">JANS advises and represents companies, founders and families across Nigeria, from the first contract to the final judgment.</p>
+          <div class="ctas">
+            <a class="btn btn-primary" href="/contact/">Speak to us <span class="arr" aria-hidden="true">→</span></a>
+            <a class="btn btn-ghost" href="/expertise/">See our expertise</a>
+          </div>
+        </div>
+        <div class="stage" id="stage">
+          <div class="fallback"><img src="/brand/jans-mark-rev.svg" alt="" width="2168" height="2597" fetchpriority="high" /></div>
+          <div class="plabel" aria-hidden="true"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" aria-labelledby="aboutTitle">
+    <div class="wrap">
+      <p class="kicker" id="aboutTitle">Who we are</p>
+      <Story story={false} />
+      <WhatWeDo />
+      <p class="more-link"><a href="/about/">Our story →</a></p>
+    </div>
+  </section>
+
+  <section class="sec on-stone" id="values" aria-labelledby="valTitle">
+    <div class="wrap">
+      <div class="sec-head wide-title">
+        <div>
+          <p class="kicker">Our values</p>
+          <h2 id="valTitle">{VALUES.map((v, i) => <span class="nw">{v.name}{i < VALUES.length - 1 ? ' ·' : ''}</span>)}</h2>
+        </div>
+        <p>The three pillars in our mark stand for the three ideas the firm was built on.</p>
+      </div>
+      <ValuesList />
+    </div>
+  </section>
+
+  <section class="sec" aria-labelledby="expTitle">
+    <div class="wrap">
+      <div class="sec-head">
+        <div>
+          <p class="kicker">Expertise</p>
+          <h2 id="expTitle">Three practice groups</h2>
+        </div>
+        <p>Our work falls into three practice groups. Most clients need more than one, so our partners work across all three.</p>
+      </div>
+      <Groups />
+      <p class="more-link"><a href="/expertise/">What each practice covers, and who leads it →</a></p>
+    </div>
+  </section>
+
+  <section class="sec on-ink" aria-labelledby="secTitle">
+    <div class="wrap">
+      <div class="sec-head">
+        <div>
+          <p class="kicker">Sectors</p>
+          <h2 id="secTitle">The industries we advise</h2>
+        </div>
+        <p>Law works differently in each industry. These are the sectors where our partners do most of their work.</p>
+      </div>
+      <SectorGrid />
+    </div>
+  </section>
+
+  <section class="sec" aria-labelledby="ptTitle">
+    <div class="wrap">
+      <div class="sec-head">
+        <div>
+          <p class="kicker">Partners</p>
+          <h2 id="ptTitle">Our partners</h2>
+        </div>
+        <p>Four partners lead the firm's work across all three practice groups.</p>
+      </div>
+      <PartnerCards />
+    </div>
+  </section>
+
+  <section class="sec sec-tight" aria-labelledby="inTitle">
+    <div class="wrap ruled">
+      <div class="sec-head">
+        <div>
+          <p class="kicker">Insights</p>
+          <h2 id="inTitle">Notes on Nigerian law</h2>
+        </div>
+        <p>Short, practical notes on Nigerian law and regulation, written by the JANS team for clients rather than lawyers.</p>
+      </div>
+      <NoteList limit={6} />
+      <div class="ctas" style="margin-top:24px"><a class="btn btn-outline" href="/insights/">All notes</a></div>
+    </div>
+  </section>
+
+  <section class="on-stone" id="brief">
+    <div class="wrap"><BriefForm /></div>
+  </section>
+
+  <section class="sec on-ink" id="contact">
+    <div class="wrap"><ContactBlock /></div>
+  </section>
+</Base>
+
+<script>
+  // The 3D temple module (and three.js) downloads only on devices that will show it.
+  const stage = document.getElementById('stage');
+  const conn = (navigator as Navigator & { connection?: { saveData?: boolean; effectiveType?: string } }).connection;
+  const mem = (navigator as Navigator & { deviceMemory?: number }).deviceMemory;
+  const fine = matchMedia('(hover: hover) and (pointer: fine)').matches;
+  const slow = conn?.saveData || (conn?.effectiveType && /(^|-)2g$/.test(conn.effectiveType));
+  const weak = !fine && mem !== undefined && mem < 4;
+  if (stage && !slow && !weak) {
+    const start = () => import('../scripts/temple').then((m) => m.initTemple(stage)).catch(() => {});
+    if ('requestIdleCallback' in window) requestIdleCallback(start, { timeout: 1200 });
+    else setTimeout(start, 300);
+  }
+</script>

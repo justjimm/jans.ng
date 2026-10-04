@@ -1,0 +1,58 @@
+---
+import { render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import NoteList from '../../components/NoteList.astro';
+import { getPartners, getNotes, type Partner } from '../../lib/notes';
+import { personSchema } from '../../lib/schema';
+import { GROUPS } from '../../data/firm';
+
+export async function getStaticPaths() {
+  const partners = await getPartners();
+  return partners.map((p) => ({ params: { slug: p.id }, props: { partner: p } }));
+}
+
+const { partner } = Astro.props as { partner: Partner };
+const p = partner.data;
+const { Content } = await render(partner);
+const notes = (await getNotes()).filter((n) => n.data.author === p.name);
+const leads = GROUPS.flatMap((g) => g.practices.filter((pr) => pr.lead.includes(p.name)).map((pr) => pr.name));
+const description = partner.body?.split('\n').find((l) => l.trim())?.slice(0, 300) ?? `${p.name}, ${p.title} at JANS.`;
+---
+<Base title={p.name} description={description} ogType="profile" schema={personSchema(p, partner.id)}>
+  <section class="sec note-wrap">
+    <div class="wrap">
+      <p class="crumb"><a href="/partners/">← All partners</a></p>
+      <div class="profile">
+        <div>
+          <div class="pt-photo"><img src={p.photo} alt={`Portrait of ${p.name}`} width="480" height="600" /></div>
+          <div class="profile-facts">
+            <div class="copyable">
+              <span class="label">Email</span>
+              <p class="pt-mail" style="padding-top:0"><a class="sel" href={`mailto:${p.email}`}>{p.email}</a><button type="button" class="copy" data-copy={p.email} aria-label={`Copy ${p.email}`}>Copy</button></p>
+            </div>
+            {p.education.length > 0 && (
+              <div><span class="label">Education</span><ul role="list">{p.education.map((e) => <li>{e}</li>)}</ul></div>
+            )}
+          </div>
+        </div>
+        <div>
+          <p class="note-kicker"><span>Partner</span></p>
+          <h1 style="font-size:var(--step-5);line-height:1.04;letter-spacing:-.035em;margin-top:12px">{p.name}</h1>
+          <p class="pt-title" style="font-size:1.0625rem;margin-top:12px">{p.title}</p>
+          <div class="profile-body" style="margin-top:28px"><Content /></div>
+          {leads.length > 0 && (
+            <div class="profile-facts" style="margin-top:32px">
+              <div><span class="label">Leads</span><ul role="list">{leads.map((l) => <li>{l}</li>)}</ul></div>
+            </div>
+          )}
+        </div>
+      </div>
+      {notes.length > 0 && (
+        <div style="margin-top:clamp(56px,8vw,88px)">
+          <div class="sec-head"><div><p class="kicker">Insights</p><h2>Notes by {p.name.split(' ')[0]}</h2></div></div>
+          <NoteList notes={notes} />
+        </div>
+      )}
+    </div>
+  </section>
+</Base>

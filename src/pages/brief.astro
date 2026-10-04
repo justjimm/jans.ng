@@ -1,0 +1,22 @@
+---
+import Base from '../layouts/Base.astro';
+import BriefForm from '../components/BriefForm.astro';
+import NoteList from '../components/NoteList.astro';
+---
+<Base title="The JANS Brief" description="The JANS Brief: one email a month with short updates on Nigerian law and regulation and the latest note from the JANS team.">
+  <section class="on-stone">
+    <div class="wrap"><BriefForm headingLevel="h1" /></div>
+  </section>
+  <section class="sec">
+    <div class="wrap">
+      <div class="sec-head">
+        <div>
+          <p class="kicker">Past issues</p>
+          <h2>Archive</h2>
+        </div>
+        <p>Past issues will appear here once the first Brief is sent. Until then, these are the latest notes it will draw on.</p>
+      </div>
+      <NoteList limit={4} />
+    </div>
+  </section>
+</Base>

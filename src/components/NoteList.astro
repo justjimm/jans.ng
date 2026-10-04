@@ -1,0 +1,40 @@
+---
+import { getNotes, shortDate, isoDate, areaKey, readingMinutes, type Note } from '../lib/notes';
+interface Props { limit?: number; filters?: boolean; notes?: Note[] }
+const { limit, filters = false } = Astro.props;
+const all = Astro.props.notes ?? (await getNotes());
+const list = limit ? all.slice(0, limit) : all;
+const counts = new Map<string, number>();
+for (const n of all) counts.set(n.data.area, (counts.get(n.data.area) ?? 0) + 1);
+const areas = [...counts.entries()].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]));
+---
+{filters && (
+  <div class="nf" role="group" aria-label="Filter notes by area">
+    <button type="button" class="nf-btn" data-area="all" aria-pressed="true">All <span>{all.length}</span></button>
+    {areas.map(([a, c]) => (
+      <button type="button" class="nf-btn" data-area={areaKey(a)} aria-pressed="false">{a} <span>{c}</span></button>
+    ))}
+  </div>
+)}
+<ul class="notes-list" role="list" data-notes>
+  {list.map((n) => (
+    <li class="nl" data-area={areaKey(n.data.area)}>
+      <a class="nl-link" href={`/insights/${n.id}/`}>
+        <span class="nl-meta"><time datetime={isoDate(n.data.date)}>{shortDate(n.data.date)}</time><span class="nl-area">{n.data.area}</span></span>
+        <span class="nl-main"><span class="nl-title">{n.data.title}</span><span class="nl-dek">{n.data.standfirst}</span></span>
+        <span class="nl-by"><span class="nl-author">{n.data.author}</span><span>{readingMinutes(n)} min read</span></span>
+      </a>
+    </li>
+  ))}
+</ul>
+{filters && (
+  <script>
+    const buttons = Array.from(document.querySelectorAll<HTMLButtonElement>('.nf-btn'));
+    const rows = Array.from(document.querySelectorAll<HTMLElement>('[data-notes] .nl'));
+    const apply = (area: string) => {
+      buttons.forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.area === area)));
+      rows.forEach((r) => { r.hidden = area !== 'all' && r.dataset.area !== area; });
+    };
+    buttons.forEach((b) => b.addEventListener('click', () => apply(b.dataset.area ?? 'all')));
+  </script>
+)}

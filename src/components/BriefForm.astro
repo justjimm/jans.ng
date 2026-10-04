@@ -1,0 +1,33 @@
+---
+import { SITE } from '../data/site';
+interface Props { headingLevel?: 'h1' | 'h2' }
+const { headingLevel = 'h2' } = Astro.props;
+const H = headingLevel;
+const endpoint = SITE.formspreeId ? `https://formspree.io/f/${SITE.formspreeId}` : '';
+---
+<div class="brief-grid">
+  <div>
+    <p class="kicker">Newsletter</p>
+    <H>The JANS Brief</H>
+    <p class="brief-lead">One email a month: short updates on Nigerian law and regulation, and the latest note from the JANS team. Unsubscribe any time.</p>
+  </div>
+  {endpoint ? (
+    <form class="form js-form" action={endpoint} method="POST" data-ok="Thank you. You are on the list for The JANS Brief.">
+      <input type="hidden" name="form" value="The JANS Brief sign-up" />
+      <input type="hidden" name="_subject" value="New sign-up: The JANS Brief" />
+      <input class="hp" type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true" />
+      <label for="briefEmail" class="label" style="letter-spacing:0;text-transform:none;font-size:.875rem">Email address</label>
+      <div class="row">
+        <input id="briefEmail" name="email" type="email" autocomplete="email" placeholder="you@company.com" required />
+        <button class="btn btn-dark" type="submit">Subscribe</button>
+      </div>
+      <label class="check" for="briefConsent"><input id="briefConsent" name="consent" type="checkbox" value="yes" required /> <span>I agree to receive The JANS Brief. JANS will use my email only to send it, as set out in the <a href="/privacy/">privacy notice</a>.</span></label>
+      <p class="form-msg" role="status" aria-live="polite"></p>
+    </form>
+  ) : (
+    <div class="form">
+      <p>To receive the Brief, email <strong class="sel">{SITE.email}</strong> with the subject “Subscribe”. You can unsubscribe the same way at any time.</p>
+      <p><a class="btn btn-dark" href={`mailto:${SITE.email}?subject=Subscribe%20to%20The%20JANS%20Brief`}>Email to subscribe</a></p>
+    </div>
+  )}
+</div>

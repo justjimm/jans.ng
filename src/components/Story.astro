@@ -1,0 +1,19 @@
+---
+interface Props { story?: boolean }
+const { story = true } = Astro.props;
+---
+<p class="statement">JANS began in 2014 as Jimi Adewole Negotiators | Solicitors. Negotiators came first in that name, and negotiation still comes first in our work: a deal is safer when its risks are agreed before signing, and many disputes end better at the table than in court.</p>
+{story && (
+  <div class="story">
+    <div class="story-col">
+      <span class="label">Our story</span>
+      <p>The firm was founded on a simple approach: learn the client's business before advising on it, agree what can be agreed, and hold firm only where it matters. That approach drew lawyers who worked the same way, and the practice grew into a partnership.</p>
+      <p>The work widened as the partnership grew, from contracts and negotiation into disputes, employment, insurance, energy, finance, tax, real estate, insolvency and estates. Leadership changed hands as well. The founder handed the role of Principal Partner to Simisola Idowu, and the firm became a partnership of four.</p>
+      <p>Today the firm is JANS. The name keeps the initials of the one it started with, and the approach it started with.</p>
+    </div>
+    <div class="story-col">
+      <span class="label">How we work</span>
+      <p>Clients rarely bring us a problem that fits one area of law. A supply contract turns into a payment dispute. A property investment raises a securities question. A growing company needs a new structure, new licences and new employment terms in the same quarter. Our partners work across practice lines, so the whole matter is handled in one place.</p>
+    </div>
+  </div>
+)}

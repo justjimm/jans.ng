@@ -1,0 +1,33 @@
+---
+import Base from '../layouts/Base.astro';
+import { SITE } from '../data/site';
+---
+<Base title="Disclaimer" description="Terms for using jans.ng: the site's content is general information about Nigerian law, not legal advice.">
+  <section class="phead">
+    <div class="wrap">
+      <p class="kicker">Legal</p>
+      <h1>Disclaimer</h1>
+    </div>
+  </section>
+  <section class="sec">
+    <div class="wrap textpage prose">
+      <h2>General information, not legal advice</h2>
+      <p>The content on this website, including the Insights notes and The JANS Brief, is general information about Nigerian law. It is not legal advice and should not be relied on as such. The law changes, and the right answer depends on the facts of each matter. For advice on your own situation, speak to us.</p>
+
+      <h2>No lawyer–client relationship</h2>
+      <p>Reading this website, or contacting us through it, does not create a lawyer–client relationship. That relationship begins only when we confirm in writing that we will act for you. Until then, please do not send us confidential information.</p>
+
+      <h2>Accuracy and dates</h2>
+      <p>Each note is accurate to the best of our knowledge on the date it was published. We do not undertake to update older notes when the law changes, so check the date before relying on anything you read here.</p>
+
+      <h2>Links to other sites</h2>
+      <p>Our notes link to outside sources. We are not responsible for the content of other websites, and a link is not an endorsement.</p>
+
+      <h2>Copyright</h2>
+      <p>© JANS. You may share a link to any page, or quote a short passage with credit to JANS and a link to the source. Please ask us before reproducing more.</p>
+
+      <h2>Contact</h2>
+      <p>{SITE.address.display} · {SITE.email} · {SITE.phoneDisplay}</p>
+    </div>
+  </section>
+</Base>

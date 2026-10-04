@@ -1,0 +1,32 @@
+---
+import { GROUPS } from '../data/firm';
+interface Props { full?: boolean; headingLevel?: 'h2' | 'h3' }
+const { full = false, headingLevel = 'h3' } = Astro.props;
+const H = headingLevel;
+---
+<div class="groups">
+  {GROUPS.map((g) => (
+    <article class="group" id={g.id} aria-labelledby={`${g.id}-h`}>
+      <header>
+        <H id={`${g.id}-h`}>{g.name}</H>
+        <p class="gr-line">{g.line}</p>
+        <p class="gr-leads"><span class="label">Partners</span>{g.leads}</p>
+      </header>
+      {full ? (
+        <ul class="pr-list" role="list">
+          {g.practices.map((p) => (
+            <li class="pr">
+              <span class="pr-name">{p.name}</span>
+              <span class="pr-desc">{p.desc}</span>
+              <span class="pr-lead">Lead · {p.lead}</span>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <ul class="pr-names" role="list">
+          {g.practices.map((p) => <li>{p.name}</li>)}
+        </ul>
+      )}
+    </article>
+  ))}
+</div>
