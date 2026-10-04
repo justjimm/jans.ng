@@ -16,7 +16,7 @@ export const SITE = {
   // Paste the Formspree form ID (the part after /f/ in the form's endpoint) to switch on the
   // contact form and the Brief sign-up. While it is empty, those forms are hidden and the
   // WhatsApp, email and phone links are shown instead.
-  formspreeId: '',
+  formspreeId: 'xaeqwzrg',
 };
 
 export const SOCIALS = [
