@@ -3,7 +3,7 @@ import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 
 export default defineConfig({
-  site: 'https://jans.ng',
+  site: 'https://www.jans.ng',
   trailingSlash: 'ignore',
   build: { format: 'directory' },
   integrations: [sitemap({ filter: (page) => !page.includes('/404') })],

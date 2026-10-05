@@ -3,7 +3,7 @@
 export const SITE = {
   name: 'JANS',
   formerName: 'Jimi Adewole Negotiators | Solicitors',
-  url: 'https://jans.ng',
+  url: 'https://www.jans.ng',
   description:
     'JANS is a Lagos law firm, founded in 2014, advising and representing companies, founders and families across Nigeria in disputes, transactions and regulation.',
   founded: 2014,
